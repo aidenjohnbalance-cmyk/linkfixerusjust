@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Just Us Link Fixer</title>
+
+<style>
+body{
+    margin:0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg,#89f7fe,#66a6ff);
+    overflow-x:hidden;
+    text-align:center;
+}
+
+/* Cartoon style background */
+body::before{
+    content:"";
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:url('https://i.imgur.com/8Km9tLL.png');
+    background-size:cover;
+    opacity:0.08;
+    z-index:-1;
+}
+
+/* Floating social icons */
+.floating-icons{
+    position:fixed;
+    top:10%;
+    width:100%;
+    display:flex;
+    justify-content:space-around;
+    animation: floatLR 12s infinite alternate ease-in-out;
+}
+
+.floating-icons img{
+    width:60px;
+    opacity:0.7;
+}
+
+@keyframes floatLR{
+    from{ transform: translateX(-40px); }
+    to{ transform: translateX(40px); }
+}
+
+.container{
+    margin-top:120px;
+    background:white;
+    width:90%;
+    max-width:500px;
+    margin-left:auto;
+    margin-right:auto;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+input{
+    width:90%;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #ccc;
+    margin-top:10px;
+}
+
+button{
+    margin-top:15px;
+    padding:10px 20px;
+    border:none;
+    border-radius:10px;
+    background:#66a6ff;
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+button:hover{
+    background:#4d8df5;
+}
+
+#result{
+    margin-top:20px;
+    font-weight:bold;
+    word-wrap:break-word;
+}
+</style>
+</head>
+<body>
+
+<div class="floating-icons">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">
+    <img src="https://cdn-icons-png.flaticon.com/512/3046/3046126.png">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png">
+</div>
+
+<div class="container">
+    <h2>Just Us Link Fixer</h2>
+    <input type="text" id="linkInput" placeholder="Paste Instagram, YouTube, TikTok, or Facebook link here">
+    <br>
+    <button onclick="fixLink()">Click to Fix</button>
+    <div id="result"></div>
+    <button id="copyBtn" style="display:none;" onclick="copyLink()">Copy</button>
+</div>
+
+<script>
+function fixLink(){
+    let link = document.getElementById("linkInput").value.trim();
+    let resultDiv = document.getElementById("result");
+    let copyBtn = document.getElementById("copyBtn");
+
+    if(!link){
+        resultDiv.innerHTML = "Please paste a link first.";
+        copyBtn.style.display="none";
+        return;
+    }
+
+    if(!(link.includes("instagram.com") ||
+         link.includes("youtube.com") ||
+         link.includes("youtu.be") ||
+         link.includes("tiktok.com") ||
+         link.includes("facebook.com"))){
+        resultDiv.innerHTML = "Only Instagram, YouTube, TikTok, and Facebook links allowed.";
+        copyBtn.style.display="none";
+        return;
+    }
+
+    let cleanLink = link.split("?")[0]; // removes tracking parameters
+    resultDiv.innerHTML = cleanLink;
+    copyBtn.style.display="inline-block";
+}
+
+function copyLink(){
+    let text = document.getElementById("result").innerText;
+    navigator.clipboard.writeText(text);
+    alert("Copied to clipboard!");
+}
+</script>
+
+</body>
+</html>
